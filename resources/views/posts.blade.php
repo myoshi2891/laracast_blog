@@ -1,54 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
+<x-layout>
+    @foreach ($posts as $post)
+        <article>
+            <h1>
+                <a href="/posts/{{ $post->slug }} ">
+                    {{ $post->title }}
+                </a>
+            </h1>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>My Blog</title>
-    <link rel="stylesheet" href="/app.css">
-</head>
-
-<body>
-    <article>
-        <h1><a href="/posts/my-first-post">My First Post</a></h1>
-
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis nisi hic nulla tempore saepe repudiandae
-            culpa
-            enim repellendus? Iusto maiores, cupiditate temporibus omnis sunt saepe amet sint dicta labore praesentium.
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae nobis nisi quo sit accusamus nihil
-            nulla
-            magnam, numquam harum temporibus alias officiis modi. Optio consectetur natus aperiam, modi totam saepe.
-        </p>
-    </article>
-
-    <article>
-        <h1><a href="/posts/my-second-post">My Second Post</a></h1>
-
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis nisi hic nulla tempore saepe repudiandae
-            culpa
-            enim repellendus? Iusto maiores, cupiditate temporibus omnis sunt saepe amet sint dicta labore praesentium.
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae nobis nisi quo sit accusamus nihil
-            nulla
-            magnam, numquam harum temporibus alias officiis modi. Optio consectetur natus aperiam, modi totam saepe.
-        </p>
-    </article>
-
-    <article>
-        <h1><a href="/posts/my-third-post">My Third Post</a></h1>
-
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis nisi hic nulla tempore saepe repudiandae
-            culpa
-            enim repellendus? Iusto maiores, cupiditate temporibus omnis sunt saepe amet sint dicta labore praesentium.
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae nobis nisi quo sit accusamus nihil
-            nulla
-            magnam, numquam harum temporibus alias officiis modi. Optio consectetur natus aperiam, modi totam saepe.
-        </p>
-    </article>
-
-</body>
-
-</html>
+            <div>
+                {{ $post->excerpt }}
+            </div>
+        </article>
+    @endforeach
+</x-layout>
