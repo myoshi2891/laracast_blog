@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Post;
+use App\Models\Category;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
@@ -18,6 +19,11 @@ use League\CommonMark\Extension\FrontMatter\Data\LibYamlFrontMatterParser;
 */
 
 Route::get('/', function () {
+
+    // \Illuminate\Support\Facades\DB::listen(function ($query) {
+    // logger($query->sql);
+    // \Illuminate\Support\Facades\Log::info('foo');
+    // });
 
     // $posts = Post::all();
     // $posts = [];
@@ -59,12 +65,19 @@ Route::get('/', function () {
     // }
     return view('posts', [
         'posts' =>
-        Post::all()
+        Post::with('category')->get()
     ]);
 });
 
 Route::get('posts/{post:slug}', function (Post $post) {
     return view('post', [
         'post' => $post
+    ]);
+});
+
+Route::get('categories/{category:slug}', function (Category $category) {
+    return view('posts', [
+        'posts' =>
+        $category->posts
     ]);
 });
