@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Post;
+use App\Models\User;
 use App\Models\Category;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
@@ -20,52 +21,9 @@ use League\CommonMark\Extension\FrontMatter\Data\LibYamlFrontMatterParser;
 
 Route::get('/', function () {
 
-    // \Illuminate\Support\Facades\DB::listen(function ($query) {
-    // logger($query->sql);
-    // \Illuminate\Support\Facades\Log::info('foo');
-    // });
-
-    // $posts = Post::all();
-    // $posts = [];
-
-    // $posts = collect(File::files(resource_path("posts")))
-    //     ->map(fn ($file) => YamlFrontMatter::parseFile($file))
-    //     ->map(
-    //         fn ($document) => new Post(
-    //             $document->title,
-    //             $document->excerpt,
-    //             $document->date,
-    //             $document->body(),
-    //             $document->slug
-    //         )
-    //     );
-
-    // $posts = array_map(function ($file) {
-    //     $document = YamlFrontMatter::parseFile($file);
-
-    //     return new Post(
-    //         $document->title,
-    //         $document->excerpt,
-    //         $document->date,
-    //         $document->body(),
-    //         $document->slug
-    //     );
-    // }, $files);
-
-    // foreach ($files as $file) {
-    //     $document = YamlFrontMatter::parseFile($file);
-
-    //     $posts[] = new Post(
-    //         $document->title,
-    //         $document->excerpt,
-    //         $document->date,
-    //         $document->body(),
-    //         $document->slug
-    //     );
-    // }
     return view('posts', [
         'posts' =>
-        Post::with('category')->get()
+        Post::latest()->get()
     ]);
 });
 
@@ -79,5 +37,12 @@ Route::get('categories/{category:slug}', function (Category $category) {
     return view('posts', [
         'posts' =>
         $category->posts
+    ]);
+});
+
+Route::get('authors/{author:username}', function (User $author) {
+    return view('posts', [
+        'posts' =>
+        $author->posts
     ]);
 });
