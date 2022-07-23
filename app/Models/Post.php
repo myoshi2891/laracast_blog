@@ -14,6 +14,26 @@ class Post extends Model
 
     protected $with = ['category', 'author'];
 
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search'] ?? false, fn ($query, $search) =>
+        $query
+            ->where('title', 'like', '%' . $search . '%')
+            ->orwhere('body', 'like', '%' . $search . '%'));
+
+
+        // $query->when($filter['search'] ?? false, function ($query, $search) {
+        //     $query->where('title', 'like', '%' . $search . '%')
+        //         ->orwhere('body', 'like', '%' . $search . '%');
+        // });
+
+
+        // if ($filters['search'] ?? false) {
+        //     $query->where('title', 'like', '%' . request('search') . '%')
+        //         ->orwhere('body', 'like', '%' . request('search') . '%');
+        // }
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';
