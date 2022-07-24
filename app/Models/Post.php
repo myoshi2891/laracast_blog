@@ -17,33 +17,23 @@ class Post extends Model
     public function scopeFilter($query, array $filters)
     {
         $query->when($filters['search'] ?? false, fn ($query, $search) =>
-        $query
-            ->where('title', 'like', '%' . $search . '%')
-            ->orwhere('body', 'like', '%' . $search . '%'));
+        $query->where(fn ($query) =>
+        $query->where('title', 'like', '%' . $search . '%')
+            ->orwhere('body', 'like', '%' . $search . '%')));
 
         $query->when(
             $filters['category'] ?? false,
             fn ($query, $category) =>
             $query->whereHas('category', fn ($query) =>
             $query->where('slug', $category))
-            // $query
-            //     ->whereExists(fn ($query) =>
-            //     $query->from('categories')
-            //         ->whereColumn('category_id', 'posts.category_id')
-            //         ->where('categories.slug', $category))
         );
 
-
-        // $query->when($filter['search'] ?? false, function ($query, $search) {
-        //     $query->where('title', 'like', '%' . $search . '%')
-        //         ->orwhere('body', 'like', '%' . $search . '%');
-        // });
-
-
-        // if ($filters['search'] ?? false) {
-        //     $query->where('title', 'like', '%' . request('search') . '%')
-        //         ->orwhere('body', 'like', '%' . request('search') . '%');
-        // }
+        $query->when(
+            $filters['author'] ?? false,
+            fn ($query, $author) =>
+            $query->whereHas('author', fn ($query) =>
+            $query->where('username', $author))
+        );
     }
 
     public function getRouteKeyName()

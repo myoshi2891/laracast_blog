@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use App\Models\Category;
-use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -12,8 +10,7 @@ class PostController extends Controller
     {
 
         return view('posts.index', [
-            'posts' => Post::latest()->filter(request(['search', 'category']))->get(),
-            // 'currentCategory' => Category::where('slug', request('category'))->first()
+            'posts' => Post::latest()->filter(request(['search', 'category', 'author']))->get(),
         ]);
     }
 
@@ -23,17 +20,4 @@ class PostController extends Controller
             'post' => $post
         ]);
     }
-
-    // protected function getPosts()
-    // {
-    // return  Post::latest()->filter()->get();
-    // $posts = Post::latest();
-
-    // if (request('search')) {
-    //     $posts->where('title', 'like', '%' . request('search') . '%')
-    //         ->orwhere('body', 'like', '%' . request('search') . '%');
-    // }
-
-    // return $posts->get();
-    // }
 }
