@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Symfony\Component\HttpFoundation\Response;
 
 class PostController extends Controller
 {
@@ -23,5 +24,17 @@ class PostController extends Controller
         return view('posts.show', [
             'post' => $post
         ]);
+    }
+
+
+    public function create()
+    {
+        // if (auth()->guest()) {
+        //     // abort(403);
+        //     abort(Response::HTTP_FORBIDDEN);
+        // }
+
+
+        return view('posts.create');
     }
 }
