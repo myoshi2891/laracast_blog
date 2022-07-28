@@ -19,7 +19,6 @@ class RegisterController extends Controller
         $attributes = request()->validate([
             'name' => 'required|max:55',
             'username' => ['required', 'max:55', 'min:3', Rule::unique('users', 'username')],
-            // 'username' => 'required|max:55|min:3|unique:users,username',
             'email' => 'required|email|max:55|unique:users,email',
             'password' => ['required', 'max:55', 'min:7']
         ]);
@@ -27,7 +26,6 @@ class RegisterController extends Controller
 
         $user = User::create($attributes);
 
-        // session()->flash('success', 'Your account has been created.');
         auth()->login($user);
 
         return redirect('/')->with('success', 'Your account has been created.');
